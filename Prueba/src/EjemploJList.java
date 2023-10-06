@@ -1,3 +1,8 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
@@ -13,6 +18,15 @@ public class EjemploJList extends JFrame {
 	public EjemploJList() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(600, 480);
+		
+		List<Person> persons = new ArrayList<Person>();
+		persons.add(new Person("AAAA","Apellido",LocalDate.now()));
+		
+		
+		///
+		
+		DefaultListModel<Person> listModel = new DefaultListModel<>();
+		
 		
 		String[] nombres = {"AAA AAAA","BBB BBBB","CCC CCC"};
 		JList jList = new JList<>(nombres);
