@@ -2,6 +2,7 @@ package ejemplosClase;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
@@ -10,11 +11,16 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 
 public class EjemploJTableBasico extends JFrame {
 	
@@ -48,7 +54,7 @@ public class EjemploJTableBasico extends JFrame {
 //			modelo.addRow(fila);
 //		}
 		
-		class MyTableModel extends DefaultTableModel{
+		class MyTableModel extends AbstractTableModel{
 			
 			/**
 			 * 
@@ -63,7 +69,14 @@ public class EjemploJTableBasico extends JFrame {
 			
 			@Override
 			public Object getValueAt(int row, int column) {
-				return"---";
+				Person p = personas.get(row);
+				switch (column) {
+				case 0: return p.getName();
+				case 1 : return p.getSurname();
+				case 3 : return p.getBirthDate();
+				default: return null;
+					
+				}
 			}
 
 			@Override
@@ -80,7 +93,7 @@ public class EjemploJTableBasico extends JFrame {
 			@Override
 			public String getColumnName(int column) {
 				
-				column = cabeceras[column];	
+				return cabeceras[column];	
 				
 			
 			}
@@ -91,11 +104,23 @@ public class EjemploJTableBasico extends JFrame {
 		JScrollPane scroll = new JScrollPane(jTable);
 		add(scroll);
 		
-		//Boton que imprime los datos
+		//Generar componenetes
 		
 		JButton botonImp = new JButton("Imprimir datos");
+		JTextField textSur = new JTextField(30);
+		
+		//Crear Panel
+		
 		JPanel panelBj = new JPanel();
+		
+		//Aniadir compponente a panel
+		
 		panelBj.add(botonImp);
+		panelBj.add(textSur);
+		
+		
+		//aniadir panel a ventana
+		
 		add(panelBj, BorderLayout.SOUTH);
 		
 		
@@ -109,6 +134,14 @@ public class EjemploJTableBasico extends JFrame {
 					botonImp.setEnabled(false);
 					botonImp.setBackground(Color.black);
 				}
+		textSur.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jTable.repaint();
+				
+			}
+		});
 				
 			}
 		});
@@ -116,6 +149,34 @@ public class EjemploJTableBasico extends JFrame {
 		
 		setVisible(true);
 	}
+	
+	class MyRender extends JLabel implements TableCellRenderer{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+			String strCell = value.toString();
+			setText(strCell);
+			if (strCell.startsWith("N")){
+				setBackground(Color.RED);
+				setOpaque(true);
+			}else {
+				setBackground(Color.GREEN);
+				setOpaque(true);
+			}
+			return this;
+		}
+		
+		
+	}
+	
+	
+	
 	public static void main(String[] args) {
 		
 		SwingUtilities.invokeLater(new Runnable() {
