@@ -9,7 +9,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.AbstractCellEditor;
+import javax.swing.CellEditor;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -175,6 +178,29 @@ public class EjemploJTableBasico extends JFrame {
 		
 	}
 	
+	class MyEditor extends AbstractCellEditor implements TableCellEditor{
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		
+		private JComboBox<String> jComboBox;
+		
+		@Override
+		public Object getCellEditorValue() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+				int column) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+		
+	}
 	
 	
 	public static void main(String[] args) {
